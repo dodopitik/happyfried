@@ -2,6 +2,14 @@
 
 @section('content')
     <div class="container-fluid fruite py-5">
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Menu Kami</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item active text-primary">Silakan pilih menu favorit anda</li>
+            </ol>
+        </div>
+        <!-- Single Page Header End -->
         <div class="container py-5">
             <div class="row g-4">
                 <div class="col-lg-12">
@@ -31,7 +39,8 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">
                                                         {{ 'Rp' . number_format($item->price, 0, ',', '.') }}</p>
-                                                    <a href="#" onclick="addToCart({{ $item->id }})"
+                                                    <a href="#"
+                                                        onclick="event.preventDefault(); addToCart({{ $item->id }})"
                                                         class="btn border border-secondary rounded-pill px-3 text-primary">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i> Tambah
                                                         Keranjang

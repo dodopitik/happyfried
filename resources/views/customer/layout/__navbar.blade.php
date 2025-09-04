@@ -1,7 +1,7 @@
    <!-- Navbar start -->
    <div class="container-fluid fixed-top">
        <div class="container px-0">
-           <nav class="navbar navbar-light bg-white navbar-expand-xl">
+           <nav class="navbar navbar-light bg-black text-white navbar-expand-xl">
                <a href="#" class="navbar-brand">
                    <h1 class="text-primary display-6">Restoranku</h1>
                </a>
@@ -20,17 +20,11 @@
                            <i class="fa fa-shopping-bag fa-2x"></i>
                        </a>
                    </div>
+
                </div>
            </nav>
        </div>
    </div>
    <!-- Navbar End -->
 
-   <!-- Single Page Header start -->
-   <div class="container-fluid page-header py-5">
-       <h1 class="text-center text-white display-6">Menu Kami</h1>
-       <ol class="breadcrumb justify-content-center mb-0">
-           <li class="breadcrumb-item active text-primary">Silakan pilih menu favorit anda</li>
-       </ol>
-   </div>
-   <!-- Single Page Header End -->
+

@@ -1,7 +1,15 @@
 @extends('customer.layout.master')
 @section('content')
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Menu Kami</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item active text-primary">Silakan pilih menu favorit anda</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
     <!-- Cart Page Start -->
-    <div class="container-fluid py-5">
+    <div class="container-fluid py-5 bg-black">
         <div class="container py-5">
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -53,9 +61,9 @@
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>
-                                            <input type="text"
+                                            <input id="qty-{{ $item['id'] }}" type="text"
                                                 class="form-control form-control-sm text-center border-0 bg-transparent"
-                                                id="qty-{{ $item['id'] }}" value="{{ $item['qty'] }}" readonly>
+                                                value="{{ $item['qty'] }}" readonly>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-plus rounded-circle bg-light border"
                                                     onclick="updateQuantity({{ $item['id'] }}, 1)">
@@ -77,7 +85,7 @@
                     </table>
                 </div>
                 @php
-                    $tax = $subtotal * 0.1;
+                    $tax = $subtotal * 0.11;
                     $total = $subtotal + $tax;
                 @endphp
 
@@ -96,7 +104,7 @@
                                     <p class="mb-0">Rp{{ number_format($subtotal, 0, ',', '.') }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <p class="mb-0 me-4">PPN (10%)</p>
+                                    <p class="mb-0 me-4">PPN (11%)</p>
                                     <div class="">
                                         <p class="mb-0">Rp{{ number_format($tax, 0, ',', '.') }}</p>
                                     </div>
@@ -120,4 +128,71 @@
         </div>
     </div>
     <!-- Cart Page End -->
+@endsection
+
+@section('scripts')
+    <script>
+        function updateQuantity(itemId, change) {
+            var qtyInput = document.getElementById('qty-' + itemId);
+            var currentQty = parseInt(qtyInput.value);
+            var newQty = currentQty + change;
+
+            if (newQty <= 0) {
+                if (confirm('Apakah Anda yakin ingin menghapus item ini?')) {
+                    removeItemFromCart(itemId);
+                }
+                return;
+            }
+            fetch("{{ route('cart.update') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        id: itemId,
+                        qty: newQty
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        qtyInput.value = newQty;
+                        location.reload();
+                    } else {
+                        alert('Gagal memperbarui jumlah item.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat mengupdate item.');
+                });
+        }
+
+        function removeItemFromCart(itemId, newQty) {
+            fetch("{{ route('cart.remove') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        id: itemId,
+                        qty: newQty,
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Gagal menghapus item dari keranjang.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menghapus item.');
+                });
+        }
+    </script>
 @endsection
