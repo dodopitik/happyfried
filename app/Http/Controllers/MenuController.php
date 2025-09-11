@@ -139,7 +139,7 @@ class MenuController extends Controller
 
             $itemDetails[] = [
                 'id' => $item['id'],
-                'price' => (int) $item['price'] + ($item['price'] * 0.11),
+                'price' => (int) ($item['price'] + ($item['price'] * 0.11)),
                 'quantity' => $item['qty'],
                 'name' => substr($item['name'], 0, 50),
             ];
@@ -179,6 +179,59 @@ class MenuController extends Controller
 
         Session::forget('cart');
 
-        return redirect()->route('menu')->with('success', 'Pesanan berhasil dibuat! Silakan tunggu pesanan Anda.');
+        if ($request->payment_method === 'cash') {
+            return redirect()->route('checkout.success', ['orderId' => $order->order_code])->with('success', 'Pesanan berhasil dibuat! Silakan tunggu pesanan Anda.');
+        } else {
+            \Midtrans\Config::$serverKey = config('midtrans.server_key');
+            \Midtrans\Config::$isProduction = config('midtrans.is_production');
+            \Midtrans\Config::$isSanitized = true;
+            \Midtrans\Config::$is3ds = true;
+
+            $params = [
+                'transaction_details' => [
+                    'order_id' => $order->order_code,
+                    'gross_amount' => (int) $order->grandtotal,
+                ],
+                'item_details' => $itemDetails,
+                'customer_details' => [
+                    'first_name' => $user->fullname ?? 'Guest',
+                    'phone' => $user->phone,
+                ],
+                'enabled_payments' => ['qris', 'gopay', 'shopeepay']
+
+            ];
+
+            try {
+                $snaptoken = \Midtrans\Snap::getSnapToken($params);
+                return response()->json([
+                    'status' => 'success',
+                    'snap_token' => $snaptoken,
+                    'order_code' => $order->order_code,
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Gagal melakukan pembayaran , silahkan coba lagi .'
+                ]);
+            }
+        }
+    }
+
+    public function checkoutSuccess($orderId)
+    {
+        $order = Order::where('order_code', $orderId)->first();
+
+        if (!$order) {
+            return redirect()->route('menu')->with('error', 'Pesanan tidak ditemukan.');
+        }
+
+        $orderItems = OrderItem::where('order_id', $order->id)->get();
+
+        if ($order->payment_method == 'qris') {
+            $order->status = 'settlement';
+            $order->save();
+        }
+
+        return view('customer.success', compact('order', 'orderItems'));
     }
 }
