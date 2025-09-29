@@ -3,7 +3,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/admin/extensions/simple-datatables/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admin/static/css/pages/simple-datatables.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 @endsection
 
 @section('content')
@@ -29,12 +29,12 @@
                 <div class="card-body">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                         <div class="dataTable-container">
-                            <table class="table table-striped text-center" id="table1">
+                            <table class="table table-striped" id="table1">
                                 <div class="d-flex justify-content-end">
                                     <a href="{{ route('items.create') }}" class="btn btn-primary "> + Tambah Menu </a>
                                 </div>
-                                <thead>
-                                    <tr>
+                                <thead class="">
+                                    <tr class="">
                                         <th>No</th>
                                         <th>Gambar</th>
                                         <th>Nama Menu</th>
@@ -56,9 +56,11 @@
                                             <td> {{ $item['name'] }}</td>
                                             <td> {{ Str::limit($item->description, 15) }}</td>
                                             <td> Rp. {{ number_format($item['price'], 0, ',', '.') }}</td>
-                                            <td><span
-                                                    class="badge {{ $item->category_id == 1 ? 'bg-warning' : 'bg-info' }}}">
-                                                    {{ $item->category_id == 1 ? 'Makanan' : 'Minuman' }} </span> </td>
+                                            <td>
+                                                <span
+                                                    class="badge {{ $item->category_id == 1 ? 'bg-warning' : 'bg-info' }}">
+                                                    {{ $item->category_id == 1 ? 'Makanan' : 'Minuman' }} </span>
+                                            </td>
                                             <td>
                                                 <span
                                                     class="badge {{ $item->is_available == 1 ? 'bg-success' : 'bg-danger' }}">
@@ -69,13 +71,13 @@
                                                 <a href="{{ route('items.edit', $item->id) }}"
                                                     class="btn btn-warning btn-sm"> <i class="bi bi-pencil">Edit</i></a>
 
+
                                                 <form action="{{ route('items.destroy', $item->id) }}" method="POST"
-                                                    class="d-inline">
+                                                    class="d-inline form-delete" data-name="{{ $item->name }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                        <i class="bi bi-trash">Hapus</i>
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="bi bi-trash"></i> Hapus
                                                     </button>
                                                 </form>
 
@@ -96,5 +98,34 @@
 
 @section('scripts')
     <script src="{{ asset('assets/admin/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
-    <script src="{{ asset('assets/admin/static/js/pages/simple-datatables.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // init datatable (opsional)
+            const t = document.querySelector('#table1');
+            if (t) new simpleDatatables.DataTable(t);
+
+            // intercept delete
+            document.querySelectorAll('.form-delete').forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = form.dataset.name || 'item ini';
+                    Swal.fire({
+                        title: 'Hapus data?',
+                        html: `Apakah Anda yakin ingin menghapus <b>${name}</b>?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, hapus',
+                        cancelButtonText: 'Batal',
+                        reverseButtons: true,
+                    }).then((r) => {
+                        if (r.isConfirmed) {
+                            // submit native; method DELETE dikirim via spoofing _method
+                            HTMLFormElement.prototype.submit.call(form);
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 @endsection

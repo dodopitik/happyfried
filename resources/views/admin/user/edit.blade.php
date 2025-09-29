@@ -1,12 +1,12 @@
 @extends('admin.layout.master')
 
-@section('title', 'Tambah User')
+@section('title', 'Edit User')
 @section('content')
     <div class="page-heading">
         <div class="page-title">
             <div class="col-md-6 col-12">
-                <h3>Tambah User Karyawan</h3>
-                <p class="text-subtitle text-muted"> Disini adalah form untuk menambah User karyawan</p>
+                <h3>Edit User Karyawan</h3>
+                <p class="text-subtitle text-muted"> Disini adalah form untuk mengedit User karyawan</p>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -19,8 +19,10 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="form" action="{{ route('users.store') }}" id="userForm" method="POST" novalidate>
+                    <form class="form" action="{{ route('users.update', $users->id) }}" id="userForm" method="POST"
+                        novalidate>
                         @csrf
+                        @method('PUT')
                         <div class="form-body">
                             <div class="row ">
                                 <div class=" ">
@@ -39,7 +41,8 @@
                                                                         <div class="position-relative">
                                                                             <input type="text" class="form-control"
                                                                                 placeholder="Username" id="username"
-                                                                                name="username">
+                                                                                name="username"
+                                                                                value="{{ old('username', $users->username) }}">
                                                                             <div class="form-control-icon">
                                                                                 <i class="bi bi-person"></i>
                                                                             </div>
@@ -54,7 +57,8 @@
                                                                         <div class="position-relative">
                                                                             <input type="text" class="form-control"
                                                                                 placeholder="Fullname" id="fullname"
-                                                                                name="fullname">
+                                                                                name="fullname"
+                                                                                value="{{ old('fullname', $users->fullname) }}">
                                                                             <div class="form-control-icon">
                                                                                 <i class="bi bi-person"></i>
                                                                             </div>
@@ -69,7 +73,8 @@
                                                                         <div class="position-relative">
                                                                             <input type="email" class="form-control"
                                                                                 placeholder="Email" id="email"
-                                                                                name="email">
+                                                                                name="email"
+                                                                                value="{{ old('email', $users->email) }}">
                                                                             <div class="form-control-icon">
                                                                                 <i class="bi bi-envelope"></i>
                                                                             </div>
@@ -82,9 +87,11 @@
                                                                 <div class="col-md-8">
                                                                     <div class="form-group has-icon-left">
                                                                         <div class="position-relative">
-                                                                            <input type="number" class="form-control"
+                                                                            <input type="tel"
+                                                                                class="form-control @error('role_id') is-invalid @enderror"
                                                                                 placeholder="Phone" id="phone"
-                                                                                name="phone">
+                                                                                name="phone"
+                                                                                value="{{ old('phone', $users->phone) }}">
                                                                             <div class="form-control-icon">
                                                                                 <i class="bi bi-phone"></i>
                                                                             </div>
@@ -97,13 +104,16 @@
                                                                 <div class="col-md-8">
                                                                     <div class="form-group">
                                                                         <select
-                                                                            class="form-select @error('category_id') is-invalid @enderror"
+                                                                            class="form-select @error('role_id') is-invalid @enderror"
                                                                             id="role_id" name="role_id" required>
-                                                                            <option value="" disabled selected> Pilih
-                                                                                Role</option>
+                                                                            <option value="" disabled selected>
+                                                                                Pilih Role
+                                                                            </option>
                                                                             @foreach ($roles as $role)
-                                                                                <option value="{{ $role->id }}">
-                                                                                    {{ $role->role_name }}</option>
+                                                                                <option value="{{ $role->id }}"
+                                                                                    {{ old('role_id', $users->role_id) == $role->id ? 'selected' : '' }}>
+                                                                                    {{ $role->role_name }}
+                                                                                </option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -116,7 +126,7 @@
                                                                         <div class="position-relative">
                                                                             <input type="password" class="form-control"
                                                                                 placeholder="Password" id="password"
-                                                                                name="password">
+                                                                                name="password" value="*********" disabled>
 
                                                                             {{-- ikon kiri (gembok) --}}
                                                                             <div class="form-control-icon">
@@ -124,7 +134,7 @@
                                                                             </div>
 
                                                                             {{-- tombol show/hide di kanan --}}
-                                                                            <button type="button" id="togglePassword"
+                                                                            <button type="button" id="#togglePassword"
                                                                                 class="btn btn-link text-secondary p-0 position-absolute top-50 end-0 translate-middle-y me-3"
                                                                                 aria-label="Tampilkan password"
                                                                                 aria-pressed="false">

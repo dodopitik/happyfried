@@ -26,6 +26,8 @@
     <!-- Need: Apexcharts -->
     <script src="{{ asset('assets/admin/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/admin/static/js/pages/dashboard.js') }}"></script>
+
+
     @yield('scripts')
 </body>
 

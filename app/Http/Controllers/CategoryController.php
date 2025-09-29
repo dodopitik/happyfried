@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -21,7 +22,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::orderBy('category_name', 'ASC')->get();
+        return view('admin.category.create', compact('categories'));
     }
 
     /**
@@ -29,7 +31,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate(
+            [
+                'category_name' => ['required', 'string', 'max:255', Rule::unique('categories', 'category_name')],
+                'description' => 'required|string',
+            ],
+            [
+                'category_name.unique'   => 'Nama category sudah dipakai. Gunakan nama lain.',
+                'category_name.required' => 'Nama category wajib diisi.',
+                'description.required' => 'Deskripsi category wajib diisi.',
+            ]
+        );
+
+        $categories = Category::create($validatedData);
+        return redirect()->route('categories.index')->with('success', 'role berhasil ditambahkan.');
     }
 
     /**
@@ -45,7 +60,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categories = Category::findOrFail($id);
+        return view('admin.category.edit', compact('categories'));
     }
 
     /**
@@ -53,7 +69,24 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $categories = Category::findOrFail($id);
+
+        $validatedData = $request->validate(
+            [
+                'category_name' => ['required', 'string', 'max:255'],
+                'description' => 'required|string',
+            ],
+            [
+                'category_name.unique'   => 'Nama role sudah dipakai. Gunakan nama lain.',
+                'category_name.required' => 'Nama role wajib diisi.',
+                'description.required' => 'Deskripsi role wajib diisi.',
+            ]
+        );
+
+
+        $categories->update($validatedData);
+
+        return redirect()->route('categories.index')->with('success', 'Menu berhasil diperbarui.');
     }
 
     /**
@@ -61,6 +94,11 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $categories = Category::findOrFail($id);
+
+        // hapus data dari database
+        $categories->forceDelete(); // benar-benar hilang dari DB
+
+        return redirect()->route('categories.index')->with('success', 'Category berhasil dihapus.');
     }
 }

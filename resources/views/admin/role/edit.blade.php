@@ -1,12 +1,12 @@
 @extends('admin.layout.master')
 
-@section('title', 'Tambah Menu')
+@section('title', 'Edit Role')
 @section('content')
     <div class="page-heading">
         <div class="page-title">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Tambah Category Menu</h3>
-                <p class="text-subtitle text-muted"> Disini adalah form untuk menambah Category Menu</p>
+                <h3>Edit Role Karyawan</h3>
+                <p class="text-subtitle text-muted"> Disini adalah form untuk mengedit role karyawan</p>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -19,24 +19,25 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="form" action="{{ route('categories.store') }}" id="categoryForm" method="POST" novalidate>
+                    <form class="form" action="{{ route('roles.update', $roles->id) }}" id="roleForm" method="POST"
+                        novalidate>
                         @csrf
+                        @method('PUT')
                         <div class="form-body">
                             <div class="row ">
-                                <div class=" ">
+                                <div class="">
                                     <div class="form-group">
-                                        <label for="category_name">Nama Category</label>
-                                        <input type="text"
-                                            class="form-control @error('category_name') is-invalid @enderror"
-                                            id="category_name" placeholder="" name="category_name" required
-                                            value="{{ old('category_name') }}"> @error('category_name')
-                                            <div class="invalid-feedback"> {{ $message }}</div>
+                                        <label for="name">Nama Role</label>
+                                        <input type="text" class="form-control @error('role_name') is-invalid @enderror"
+                                            id="role_name" placeholder="" name="role_name" required
+                                            value="{{ old('role_name', $roles->role_name) }}"> @error('role_name')
+                                            <div class="invalid-feedback"> {{ $message }} </div>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="description">Deskripsi Category</label>
+                                        <label for="description">Deskripsi Role </label>
                                         <textarea type="text" class="form-control  @error('description') is-invalid @enderror" id="description"
-                                            placeholder="" name="description" required rows="3">{{ old('description') }}</textarea>
+                                            placeholder="" name="description" required rows="3">{{ old('description', $roles->description) }}</textarea>
                                         @error('description')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -46,7 +47,7 @@
                                             data-bs-target="#saveModal">
                                             Simpan
                                         </button>
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+
                                         <button type="button" class="btn btn-light-danger me-1 mb-1" data-bs-toggle="modal"
                                             data-bs-target="#cancelModal">
                                             Batal
@@ -76,7 +77,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary" form="categoryForm">Ya, Simpan</button>
+                    <button type="submit" class="btn btn-primary" form="roleForm">Ya, Simpan</button>
                 </div>
             </div>
         </div>
@@ -96,7 +97,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                    <a href="{{ route('categories.index') }}" class="btn btn-danger">Ya, Batalkan</a>
+                    <a href="{{ route('roles.index') }}" class="btn btn-danger">Ya, Batalkan</a>
                 </div>
             </div>
         </div>

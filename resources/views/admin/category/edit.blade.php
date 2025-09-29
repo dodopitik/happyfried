@@ -1,12 +1,12 @@
 @extends('admin.layout.master')
 
-@section('title', 'Tambah Menu')
+@section('title', 'Edit Menu')
 @section('content')
     <div class="page-heading">
         <div class="page-title">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Tambah Category Menu</h3>
-                <p class="text-subtitle text-muted"> Disini adalah form untuk menambah Category Menu</p>
+                <h3>Edit Category Menu</h3>
+                <p class="text-subtitle text-muted"> Disini adalah form untuk mengedit Category Menu</p>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -19,8 +19,10 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="form" action="{{ route('categories.store') }}" id="categoryForm" method="POST" novalidate>
+                    <form class="form" action="{{ route('categories.update', $categories->id) }}" id="categoryForm"
+                        method="POST" novalidate>
                         @csrf
+                        @method('PUT')
                         <div class="form-body">
                             <div class="row ">
                                 <div class=" ">
@@ -29,14 +31,15 @@
                                         <input type="text"
                                             class="form-control @error('category_name') is-invalid @enderror"
                                             id="category_name" placeholder="" name="category_name" required
-                                            value="{{ old('category_name') }}"> @error('category_name')
+                                            value="{{ old('category_name', $categories->category_name) }}">
+                                        @error('category_name')
                                             <div class="invalid-feedback"> {{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Deskripsi Category</label>
                                         <textarea type="text" class="form-control  @error('description') is-invalid @enderror" id="description"
-                                            placeholder="" name="description" required rows="3">{{ old('description') }}</textarea>
+                                            placeholder="" name="description" required rows="3">{{ old('description', $categories->description) }}</textarea>
                                         @error('description')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
