@@ -157,7 +157,7 @@ class MenuController extends Controller
             'order_code' => 'ORD-'  . $tableNumber . '-' . time(),
             'user_id' => $user->id,
             'subtotal' => $totalAmount,
-            'tax' => 0.1 * $totalAmount,
+            'tax' => 0.11 * $totalAmount,
             'grandtotal' => $totalAmount + ($totalAmount * 0.11),
             'status' => 'pending',
             'table_number' => $tableNumber,
