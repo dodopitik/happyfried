@@ -19,7 +19,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="form" action="{{ route('items.update', $item->id) }}" enctype="multipart/form-data"
+                    <form id="itemForm" action="{{ route('items.update', $item->id) }}" enctype="multipart/form-data"
                         method="POST">
                         @csrf
                         @method('PUT')
@@ -159,7 +159,7 @@
 
     <script>
         document.getElementById('confirmSave').addEventListener('click', function() {
-            document.querySelector('form').submit();
+            document.getElementById('itemForm').submit();
         });
 
         document.getElementById('image').addEventListener('change', function(event) {

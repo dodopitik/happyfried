@@ -67,4 +67,22 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function settlement($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'settlement';
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success', 'Order telah diselesaikan.');
+    }
+
+    public function cooked($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'cooked';
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success', 'Order telah diselesaikan.');
+    }
 }

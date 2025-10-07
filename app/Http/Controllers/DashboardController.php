@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +12,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard.index');
+        $totalOrders = Order::count();
+        $totalRevenue = Order::sum('grandtotal');
+
+        $todayOrders = Order::whereDate('created_at', now()->toDateString())->count();
+        $todayRevenue = Order::whereDate('created_at', now()->toDateString())->sum('grandtotal');
+
+        return view('admin.dashboard', compact('totalOrders', 'totalRevenue', 'todayOrders', 'todayRevenue'));
     }
 
     /**

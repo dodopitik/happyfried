@@ -74,8 +74,30 @@
                                                         <i class="bi bi-eye"></i> Lihat
                                                     </a>
                                                 </span>
-
-
+                                                @if (Auth::user()->role->role_name === 'admin' ||
+                                                        Auth::user()->role->role_name === 'cashier' ||
+                                                        Auth::user()->role->role_name === 'chef')
+                                                    @if ($order->status === 'pending' && $order->payment_method === 'cash')
+                                                        <form action="{{ route('orders.settlement', $order->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-sm btn-success mt-1"
+                                                                onclick="return confirm('Apakah Anda yakin ingin mengubah status pesanan ini menjadi settlement?')">
+                                                                <i class="bi bi-check-circle"></i> Settlement
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                    @if ($order->status === 'settlement')
+                                                        <form action="{{ route('orders.cooked', $order->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-sm btn-info mt-1"
+                                                                onclick="return confirm('Apakah Anda yakin ingin mengubah status pesanan ini menjadi cooked?')">
+                                                                <i class="bi bi-check-circle"></i> cooked
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                @endif
                                             </td>
 
                                         </tr>

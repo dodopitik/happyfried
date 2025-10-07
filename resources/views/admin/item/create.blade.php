@@ -19,7 +19,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="form" action="{{ route('items.store') }}" enctype="multipart/form-data" id="formItem"
+                    <form id="itemForm" action="{{ route('items.store') }}" enctype="multipart/form-data" id="formItem"
                         method="POST">
                         @csrf
                         <div class="form-body">
@@ -143,7 +143,7 @@
 
     <script>
         document.getElementById('confirmSave').addEventListener('click', function() {
-            document.querySelector('form').submit();
+            document.getElementById('itemForm').submit();
         });
     </script>
 @endsection

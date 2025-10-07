@@ -107,13 +107,13 @@
                                     <th colspan="4" class="text-end ">Total Pesanan :</th>
                                     <th>Rp. {{ number_format($orders->grandtotal, 0, ',', '.') }}</th>
                                 </tr>
+
                                 <tr>
                                     <th colspan="5" class="text-end">
                                         <a href="{{ route('orders.index') }}" class="btn btn-secondary mt-3">
-                                            <i class="bi bi-arrow-left"></i> Kembali ke Daftar Pesanan
+                                            <i class="bi bi-arrow-left fs-5"></i> Kembali ke Daftar Pesanan
                                         </a>
                                     </th>
-
                                 </tr>
 
                             </table>

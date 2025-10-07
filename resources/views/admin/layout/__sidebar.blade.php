@@ -56,38 +56,75 @@
                            <span>Kelola Pesanan</span>
                        </a>
                    </li>
+                   @if (Auth::user()->role->role_name === 'admin' || Auth::user()->role->role_name === 'cashier')
+                       <li class="sidebar-item  {{ request()->routeIs('categories.*') ? 'active' : '' }}">
+                           <a href="{{ route('categories.index') }}" class='sidebar-link'>
+                               <i class="bi bi-person-fill"></i>
+                               <span>Manajemen Category</span>
+                           </a>
+                       </li>
 
-                   <li class="sidebar-item  {{ request()->routeIs('categories.*') ? 'active' : '' }}">
-                       <a href="{{ route('categories.index') }}" class='sidebar-link'>
-                           <i class="bi bi-person-fill"></i>
-                           <span>Manajemen Category</span>
+                       <li class="sidebar-item  {{ request()->routeIs('items.*') ? 'active' : '' }}">
+                           <a href="{{ route('items.index') }}" class='sidebar-link'>
+                               <i class="bi bi-card-list"></i>
+                               <span>Daftar Menu</span>
+                           </a>
+                       </li>
+                   @endif
+
+                   @if (Auth::user()->role->role_name === 'admin')
+                       <li class="sidebar-item  {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                           <a href="{{ route('roles.index') }}" class='sidebar-link'>
+                               <i class="bi bi-person-fill"></i>
+                               <span>Manajemen Role</span>
+                           </a>
+                       </li>
+                       <li class="sidebar-item  {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                           <a href="{{ route('users.index') }}" class='sidebar-link'>
+                               <i class="bi bi-person-fill"></i>
+                               <span>Manajemen Karyawan</span>
+                           </a>
+                       </li>
+                   @endif
+
+
+                   <li class="sidebar-item">
+                       <!-- Tombol untuk memunculkan modal -->
+                       <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                           <i class="bi bi-box-arrow-right"></i>
+                           <span>Logout</span>
                        </a>
                    </li>
-
-                   <li class="sidebar-item  {{ request()->routeIs('items.*') ? 'active' : '' }}">
-                       <a href="{{ route('items.index') }}" class='sidebar-link'>
-                           <i class="bi bi-card-list"></i>
-                           <span>Daftar Menu</span>
-                       </a>
-                   </li>
-
-                   <li class="sidebar-item  {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                       <a href="{{ route('users.index') }}" class='sidebar-link'>
-                           <i class="bi bi-person-fill"></i>
-                           <span>Manajemen Karyawan</span>
-                       </a>
-                   </li>
-
-                   <li class="sidebar-item  {{ request()->routeIs('roles.*') ? 'active' : '' }}">
-                       <a href="{{ route('roles.index') }}" class='sidebar-link'>
-                           <i class="bi bi-person-fill"></i>
-                           <span>Manajemen Role</span>
-                       </a>
-                   </li>
-
-
 
                </ul>
+           </div>
+
+       </div>
+   </div>
+
+   <!-- Modal Konfirmasi Logout -->
+   <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered">
+           <div class="modal-content border-0 rounded-3 shadow">
+               <div class="modal-header bg-danger text-white rounded-top">
+                   <h5 class="modal-title" id="logoutModalLabel">
+                       <i class="bi bi-box-arrow-right me-1"></i> Konfirmasi Logout
+                   </h5>
+                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                       aria-label="Close"></button>
+               </div>
+
+               <div class="modal-body text-center">
+                   <p class="mb-0">Apakah kamu yakin ingin keluar dari sistem?</p>
+               </div>
+
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                   <form id="logoutForm" method="POST" action="{{ route('logout') }}">
+                       @csrf
+                       <button type="submit" class="btn btn-danger">Ya, Logout</button>
+                   </form>
+               </div>
            </div>
        </div>
    </div>
