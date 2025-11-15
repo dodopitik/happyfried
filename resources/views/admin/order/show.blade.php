@@ -109,11 +109,17 @@
                                 </tr>
 
                                 <tr>
-                                    <th colspan="5" class="text-end">
-                                        <a href="{{ route('orders.index') }}" class="btn btn-secondary mt-3">
+                                    <th colspan="5" class="text-end ">
+                                       <a href="{{ route('orders.print', $orders) }}" target="_blank" class="btn btn-primary mt-3">
+                                            <i class="bi bi-printer fs-5"></i> Print Struk
+                                        </a>
+                                         
+                                        <a href="{{ route('orders.index') }}" class="btn btn-secondary mt-3 ">
                                             <i class="bi bi-arrow-left fs-5"></i> Kembali ke Daftar Pesanan
                                         </a>
+                                        
                                     </th>
+                                      
                                 </tr>
 
                             </table>

@@ -34,7 +34,7 @@
                                 <div class="form-item w-100">
                                     <label class="form-label my-3">Nomor Meja<sup>*</sup></label>
                                     <input type="text" class="form-control"
-                                        value="{{ $tableNumber ?? 'tidak ada nomor meja' }}" disabled required>
+                                        value="{{ $tableNumber ?? 'scan ulang QR code' }}" disabled required>
                                 </div>
                             </div>
                         </div>

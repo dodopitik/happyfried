@@ -8,6 +8,9 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewOrderNotificationMail;
+
 
 Route::get('/', function () {
     return redirect()->route('menu');
@@ -24,7 +27,21 @@ Route::post('/cart/remove', [MenuController::class, 'removeCart'])->name('cart.r
 Route::get('/checkout', [MenuController::class, 'checkout'])->name('checkout');
 Route::post('/checkout/store', [MenuController::class, 'storeOrder'])->name('checkout.store');
 Route::get('/checkout/success/{orderId}', [MenuController::class, 'checkoutSuccess'])->name('checkout.success');
+// Route::get('/test-email', function () {
+//     $order = \App\Models\Order::latest()->first();
 
+//     if (!$order) {
+//         return 'Tidak ada order di database. Buat order dulu lalu coba lagi.';
+//     }
+
+//     $items = \App\Models\OrderItem::where('order_id', $order->id)->get();
+
+//     Mail::to(env('ORDER_NOTIFICATION_EMAIL'))->send(
+//         new NewOrderNotificationMail($order, $items)
+//     );
+
+//     return 'Email test dikirim ke ' . env('ORDER_NOTIFICATION_EMAIL');
+// });
 
 // adminroutes
 
@@ -43,5 +60,8 @@ Route::middleware(['auth', 'role:admin|cashier|chef'])->group(function () {
     Route::post('orders/{order}', [OrderController::class, 'settlement'])->name('orders.settlement');
     Route::post('orders/{order}/cooked', [OrderController::class, 'cooked'])->name('orders.cooked');
     Route::resource('orders', OrderController::class);
+     Route::get('orders/{order}/print', [OrderController::class, 'print'])
+        ->name('orders.print');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+

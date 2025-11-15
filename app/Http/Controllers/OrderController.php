@@ -85,4 +85,15 @@ class OrderController extends Controller
 
         return redirect()->route('orders.index')->with('success', 'Order telah diselesaikan.');
     }
+
+ public function print(Order $order)
+{
+    $order->load(['user', 'orderItems.item']); // eager load YANG BENAR
+
+    return view('admin.order.print', [
+        'order' => $order,
+        'orderItems' => $order->orderItems, // benar
+    ]);
+}
+
 }

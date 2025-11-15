@@ -3,7 +3,9 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/admin/extensions/simple-datatables/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 @endsection
 
 @section('content')
@@ -57,9 +59,22 @@
                                             <td> {{ Str::limit($item->description, 15) }}</td>
                                             <td> Rp. {{ number_format($item['price'], 0, ',', '.') }}</td>
                                             <td>
-                                                <span
-                                                    class="badge {{ $item->category_id == 1 ? 'bg-warning' : 'bg-info' }}">
-                                                    {{ $item->category_id == 1 ? 'Makanan' : 'Minuman' }} </span>
+                                                @php
+                                                    $labels = [
+                                                        1 => 'Makanan',
+                                                        2 => 'Minuman',
+                                                        6 => 'Snack',
+                                                    ];
+
+                                                    $colors = [
+                                                        1 => 'bg-warning',
+                                                        2 => 'bg-info',
+                                                        6 => 'bg-orange',
+                                                    ];
+                                                @endphp
+                                             <span class="badge {{ $colors[$item->category_id] ?? 'bg-secondary' }}">
+                                                    {{ $labels[$item->category_id] ?? 'Unknown' }}
+                                                </span>
                                             </td>
                                             <td>
                                                 <span

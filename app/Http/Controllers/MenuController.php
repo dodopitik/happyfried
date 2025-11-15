@@ -9,6 +9,8 @@ use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewOrderNotificationMail;
 
 class MenuController extends Controller
 {
@@ -54,8 +56,10 @@ class MenuController extends Controller
         }
 
         Session::put('cart', $cart);
+        
 
         return response()->json(['success' => 'Berhasil ditambahkan ke keranjang!', 'cart' => $cart]);
+        
     }
 
     public function clearCart()
@@ -231,7 +235,17 @@ class MenuController extends Controller
             $order->status = 'settlement';
             $order->save();
         }
+//          // --- Kirim email notifikasi hanya ke kasir/owner ---
+//     // Ambil target email dari .env
+//     $targetEmail = env('ORDER_NOTIFICATION_EMAIL', 'aditamabagus11@gmail.com
+// ');
 
+//     // Kirim email
+//     Mail::to($targetEmail)->send(
+//         new NewOrderNotificationMail($order, $orderItems)
+//     );
+//     // --- selesai kirim email ---
+        
         return view('customer.success', compact('order', 'orderItems'));
     }
 }

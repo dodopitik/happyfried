@@ -74,10 +74,12 @@
                                     </td>
                                     <td>Rp{{ number_format($item['price'] * $item['qty'], 0, ',', '.') }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-danger"
-                                            onclick="if(confirm('Apakah Anda yakin ingin menghapus item ini?')) { removeItemFromCart({{ $item['id'] }}) }">
-                                            <i class="bi bi-trash-fill"></i>
-                                        </button>
+                                       <button class="btn btn-sm btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmDeleteModal"
+        data-item-id="{{ $item['id'] }}">
+    <i class="bi bi-trash-fill"></i>
+</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -128,6 +130,29 @@
         </div>
     </div>
     <!-- Cart Page End -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title text-white" id="confirmDeleteLabel">Hapus Item</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+
+      <div class="modal-body">
+        Apakah Anda yakin ingin menghapus item ini dari keranjang?
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+          Ya, hapus
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -137,12 +162,17 @@
             var currentQty = parseInt(qtyInput.value);
             var newQty = currentQty + change;
 
-            if (newQty <= 0) {
-                if (confirm('Apakah Anda yakin ingin menghapus item ini?')) {
-                    removeItemFromCart(itemId);
-                }
-                return;
-            }
+         if (newQty <= 0) {
+    // Simpan ID item yang mau dihapus
+    itemToDelete = itemId;
+
+    // Tampilkan modal hapus
+    const deleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+    deleteModal.show();
+
+    // Hentikan fungsi sampai user konfirmasi
+    return;
+}
             fetch("{{ route('cart.update') }}", {
                     method: 'POST',
                     headers: {
@@ -195,4 +225,29 @@
                 });
         }
     </script>
+    <script>
+  // id item yang mau dihapus, kita simpan sementara di sini
+  let itemToDelete = null;
+
+  // Saat modal mau ditampilkan
+  const deleteModal = document.getElementById('confirmDeleteModal');
+  deleteModal.addEventListener('show.bs.modal', function (event) {
+    // button yang diklik user
+    const button = event.relatedTarget;
+    // ambil data-id dari tombol
+    itemToDelete = button.getAttribute('data-item-id');
+  });
+
+  // Saat user klik "Ya, hapus"
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+  confirmDeleteBtn.addEventListener('click', function () {
+    if (itemToDelete) {
+      removeItemFromCart(itemToDelete); // fungsi kamu yang sudah ada
+    }
+
+    // Tutup modal setelah aksi
+    const modal = bootstrap.Modal.getInstance(deleteModal);
+    modal.hide();
+  });
+</script>
 @endsection
