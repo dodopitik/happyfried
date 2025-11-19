@@ -96,7 +96,7 @@
         });
 
         function addToCart(menuId) {
-            fetch("{{ route('cart.add') }}", {
+            fetch("/cart/add", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
