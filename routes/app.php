@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Mail;
@@ -48,6 +49,9 @@ Route::get('/checkout/success/{orderId}', [MenuController::class, 'checkoutSucce
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
+Route::get('/admin/pay-qris', [PaymentController::class, 'qris'])
+    ->name('admin.pay.qris');
+
     // Kalau ada aksi Item/Category yang benar-benar khusus admin, atur via policy/gate
 });
 

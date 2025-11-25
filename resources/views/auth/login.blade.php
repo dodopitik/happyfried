@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Restoranku</title>
+    <title>Login - Archana Order APP</title>
     <link rel="stylesheet" crossorigin="" href="{{ asset('assets/admin/compiled/css/app.css') }}">
     <link rel="stylesheet" crossorigin="" href="{{ asset('assets/admin/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" crossorigin="" href="{{ asset('assets/admin/compiled/css/auth.css') }}">
@@ -22,21 +22,27 @@
                     <div class="auth-logo">
 
                     </div>
-                    <h1 class="auth-title">Log in Restoranku</h1>
-                    <p class="auth-subtitle mb-5">Silakan masuk untuk mengelola layanan Restoranku.</p>
-
+                    <h1 class="auth-title">Log in Archana Order APP</h1>
+                    <p class="auth-subtitle mb-5">Silakan masuk untuk mengelola layanan Archana Order APP.</p>
+@if ($errors->any())
+    <div class="alert alert-danger mb-4">
+        @foreach ($errors->all() as $error)
+            <div>{{ $error }}</div>
+        @endforeach
+    </div>
+@endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Email"
-                                name="email" :value="old('email')" required autofocus autocomplete="Email">
+                            <input type="email" class="form-control form-control-xl" placeholder="Email"
+    name="email" value="{{ old('email') }}" required autofocus autocomplete="email">
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Password"
-                                name="password" require autocomplete="current-password">
+                        <input type="password" class="form-control form-control-xl" placeholder="Password"
+    name="password" required autocomplete="current-password">
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>

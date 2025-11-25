@@ -2,9 +2,9 @@
 <div class="container-fluid fixed-top shadow-sm">
     <div class="container px-0">
         <nav class="navbar navbar-light bg-black text-white navbar-expand-xl  "> <a href="#" class="navbar-brand">
-                <h1 class="text-happy display-6 ">Happy Living</h1>
+                <h1 class="text-happy display-6 ">Archana Order</h1>
             </a>
-                @php
+                {{-- @php
                     $cart = session('cart', []);
                     $count = $cart ? array_sum(array_column($cart, 'qty')) : 0;
                 @endphp
@@ -16,7 +16,7 @@
                             style="min-width:20px;font-size:.7rem;padding:.25em .45em;{{ $count ? '' : 'display:none;' }}">
                             {{ $count }}
                         </span> </a>
-                </div>
+                </div> --}}
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars text-happy"></span>

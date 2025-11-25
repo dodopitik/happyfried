@@ -36,7 +36,6 @@ class ItemController extends Controller
             [
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'name' => 'required|string|max:255',
-                'description' => 'required|string',
                 'price' => 'required|numeric|min:0',
                 'category_id' => 'required|exists:categories,id',
                 'is_available' => 'required|boolean',
@@ -46,7 +45,6 @@ class ItemController extends Controller
                 'image.mimes' => 'Format gambar harus berupa jpeg, png, jpg, gif, atau svg.',
                 'image.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.',
                 'name.required' => 'Nama menu wajib diisi.',
-                'description.required' => 'Deskripsi menu wajib diisi.',
                 'price.required' => 'Harga menu wajib diisi.',
                 'category_id.required' => 'Kategori menu wajib dipilih.',
                 'is_available.required' => 'Status ketersediaan menu wajib dipilih.',
@@ -94,7 +92,7 @@ class ItemController extends Controller
             [
                 'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'name'        => 'required|string|max:255',
-                'description' => 'required|string',
+               
                 'price'       => 'required|numeric|min:0',
                 'category_id' => 'required|exists:categories,id',
                 'is_available' => 'required|boolean',
@@ -104,7 +102,7 @@ class ItemController extends Controller
                 'image.mimes'      => 'Format gambar harus berupa jpeg, png, jpg, gif, atau svg.',
                 'image.max'        => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.',
                 'name.required'    => 'Nama menu wajib diisi.',
-                'description.required' => 'Deskripsi menu wajib diisi.',
+              
                 'price.required'   => 'Harga menu wajib diisi.',
                 'category_id.required' => 'Kategori menu wajib dipilih.',
                 'is_available.required' => 'Status ketersediaan menu wajib dipilih.',

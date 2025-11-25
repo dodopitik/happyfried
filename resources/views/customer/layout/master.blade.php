@@ -34,8 +34,10 @@
                     <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
                     <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
                     <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                    Designed By <a class="border-bottom" href="https://htmlcodex.com">Braditams</a> Distributed By <a
-                        class="border-bottom" href="https://themewagon.com">ThemeDeepOcean</a>
+                    Designed By <a class="border-bottom text-happy" href="https://www.instagram.com/braditamaa/" target="_blank" 
+   rel="noopener noreferrer">Braditams</a> Distributed By <a
+                        class="border-bottom text-happy" href="https://archana.co.id" target="_blank" 
+   rel="noopener noreferrer">Archana Order APP</a>
                 </div>
             </div>
         </div>
@@ -43,7 +45,7 @@
     <!-- Copyright End -->
 
     {{-- footer --}}
-    @include('customer.layout.__footer')
+    {{-- @include('customer.layout.__footer') --}}
     {{-- footer end --}}
 
     <!-- Back to Top -->

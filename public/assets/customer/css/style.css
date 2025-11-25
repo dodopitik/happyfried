@@ -201,8 +201,8 @@
     transform: translate(-50%, -50%);
     font-size: 25px;
     background: linear-gradient(
-        rgba(255, 181, 36, 0.7),
-        rgba(255, 181, 36, 0.7)
+        rgba(36, 186, 255, 0.7),
+        rgba(36, 186, 255, 0.7)
     );
 }
 
@@ -540,11 +540,10 @@
 }
 
 .filter-btn.active {
-    background-color: #5ff5ed !important; /* warna kuning */
+    background-color: #ffffff !important; /* warna kuning */
     color: #000 !important;
     transform: scale(1.05);
     transition: 0.2s;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.863);
 }
 .cursor-pointer {
     cursor: pointer;
@@ -557,4 +556,71 @@
 }
 .bg-orange {
     background: #f58f5f;
+}
+
+.sticky-cart-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    padding: 10px 12px;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+    z-index: 9999;
+}
+
+.sticky-cart-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    max-width: 1200px; /* biar di desktop nggak melebar full banget */
+    margin: 0 auto;
+}
+
+.sticky-cart-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.sticky-cart-count {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.sticky-cart-btn {
+    border: none;
+    outline: none;
+    background: #64b1e9; /* warna brand kamu */
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.sticky-cart-btn:hover {
+    opacity: 0.9;
+}
+
+/* Biar konten utama nggak ketutup bar bawah */
+body {
+    padding-bottom: 70px;
+}
+
+/* Sedikit tweak di layar kecil */
+@media (max-width: 576px) {
+    .sticky-cart-bar {
+        padding: 8px 10px;
+    }
+
+    .sticky-cart-btn {
+        flex: 1;
+        text-align: center;
+    }
 }

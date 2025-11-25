@@ -4,6 +4,18 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/admin/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        @media (max-width: 576px) {
+            #table1 {
+                font-size: 0.8rem;
+            }
+
+            #table1 .btn {
+                padding: 0.15rem 0.35rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -28,8 +40,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                        <div class="dataTable-container">
-                            <table class="table table-striped" id="table1">
+                        <div class="dataTable-container table-responsive">
+                            <table class="table table-striped table-sm text-nowrap" id="table1">
                                 <div class="d-flex justify-content-end">
                                     <a href="{{ route('orders.create') }}" class="btn btn-primary "> + Tambah Menu </a>
                                 </div>
