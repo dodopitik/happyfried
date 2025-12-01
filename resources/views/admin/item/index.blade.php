@@ -14,7 +14,8 @@
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
                     <h3>Daftar Menu</h3>
-                    <p class="text-subtitle text-muted"> Disini halaman untuk menambahkan daftar menu makanan dan minuman</p>
+                    <p class="text-subtitle text-muted"> Disini halaman untuk menambahkan daftar menu makanan dan minuman
+                    </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -40,7 +41,6 @@
                                         <th>No</th>
                                         <th>Gambar</th>
                                         <th>Nama Menu</th>
-                                        <th>Deskripsi</th>
                                         <th>Harga</th>
                                         <th>Kategori</th>
                                         <th>Status</th>
@@ -56,7 +56,7 @@
                                                     alt="{{ $item['name'] }}"
                                                     onerror="this.onerror=null;this.src='{{ $item['image'] }}';"></td>
                                             <td> {{ $item['name'] }}</td>
-                                            <td> {{ Str::limit($item->description, 15) }}</td>
+
                                             <td> Rp. {{ number_format($item['price'], 0, ',', '.') }}</td>
                                             <td>
                                                 @php
@@ -72,7 +72,7 @@
                                                         6 => 'bg-orange',
                                                     ];
                                                 @endphp
-                                             <span class="badge {{ $colors[$item->category_id] ?? 'bg-secondary' }}">
+                                                <span class="badge {{ $colors[$item->category_id] ?? 'bg-secondary' }}">
                                                     {{ $labels[$item->category_id] ?? 'Unknown' }}
                                                 </span>
                                             </td>

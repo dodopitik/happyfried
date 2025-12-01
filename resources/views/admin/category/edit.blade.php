@@ -36,14 +36,7 @@
                                             <div class="invalid-feedback"> {{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <label for="description">Deskripsi Category</label>
-                                        <textarea type="text" class="form-control  @error('description') is-invalid @enderror" id="description"
-                                            placeholder="" name="description" required rows="3">{{ old('description', $categories->description) }}</textarea>
-                                        @error('description')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+
                                     <div class="form-group d-flex justify-content-end">
                                         <button type="button" class="btn btn-primary me-1 mb-1" data-bs-toggle="modal"
                                             data-bs-target="#saveModal">

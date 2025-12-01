@@ -34,12 +34,12 @@ class CategoryController extends Controller
         $validatedData = $request->validate(
             [
                 'category_name' => ['required', 'string', 'max:255', Rule::unique('categories', 'category_name')],
-                'description' => 'required|string',
+               
             ],
             [
                 'category_name.unique'   => 'Nama category sudah dipakai. Gunakan nama lain.',
                 'category_name.required' => 'Nama category wajib diisi.',
-                'description.required' => 'Deskripsi category wajib diisi.',
+              
             ]
         );
 
@@ -74,12 +74,10 @@ class CategoryController extends Controller
         $validatedData = $request->validate(
             [
                 'category_name' => ['required', 'string', 'max:255'],
-                'description' => 'required|string',
             ],
             [
                 'category_name.unique'   => 'Nama role sudah dipakai. Gunakan nama lain.',
                 'category_name.required' => 'Nama role wajib diisi.',
-                'description.required' => 'Deskripsi role wajib diisi.',
             ]
         );
 

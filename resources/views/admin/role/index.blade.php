@@ -37,7 +37,6 @@
                                     <tr class="">
                                         <th>No</th>
                                         <th>Role</th>
-                                        <th>Deskripsi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -46,7 +45,6 @@
                                         <tr>
                                             <td> {{ $loop->iteration }}</td>
                                             <td> {{ $role['role_name'] }}</td>
-                                            <td> {{ $role['description'] }} </td>
                                             <td>
                                                 <a href="{{ route('roles.edit', $role->id) }}"
                                                     class="btn btn-warning btn-sm"> <i class="bi bi-pencil">Edit</i></a>

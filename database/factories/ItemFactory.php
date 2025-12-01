@@ -19,7 +19,6 @@ class ItemFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'category_id' => $this->faker->numberBetween(1, 2), // Assuming you have 4 categories
-            'description' => $this->faker->text(),
             'price' => $this->faker->randomFloat(1000, 100000),
             'image' => fake()->randomElement([
                 'https://plus.unsplash.com/premium_photo-1694708455249-992010f9db32',

@@ -37,7 +37,7 @@
                                     <tr class="">
                                         <th>No</th>
                                         <th>Category</th>
-                                        <th>Deskripsi</th>
+
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -46,7 +46,7 @@
                                         <tr>
                                             <td> {{ $loop->iteration }}</td>
                                             <td> {{ $categori['category_name'] }}</td>
-                                            <td> {{ $categori['description'] }} </td>
+
                                             <td>
                                                 <a href="{{ route('categories.edit', $categori->id) }}"
                                                     class="btn btn-warning btn-sm"> <i class="bi bi-pencil">Edit</i></a>

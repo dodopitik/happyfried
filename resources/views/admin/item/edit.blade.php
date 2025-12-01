@@ -55,14 +55,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <label for="description">Deskripsi Menu</label>
-                                        <textarea type="text" class="form-control  @error('description') is-invalid @enderror" id="description"
-                                            placeholder="" name="description" required rows="3">{{ old('description', $item->description) }}</textarea>
-                                        @error('description')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+
                                     <div class="form-group">
                                         <label for="price">Harga</label>
                                         <input type="number" class="form-control  @error('price') is-invalid @enderror"

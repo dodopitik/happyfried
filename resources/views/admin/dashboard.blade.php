@@ -163,9 +163,7 @@
                                             Rp {{ number_format($lastMonthlyFee, 0, ',', '.') }}
                                         </h6>
                                         {{-- Tombol bayar --}}
-                                        <a href="{{ route('admin.pay.qris') }}" class="btn btn-primary btn-sm mt-2 w-80">
-                                            Bayar Sekarang
-                                        </a>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
