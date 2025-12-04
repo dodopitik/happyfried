@@ -8,9 +8,10 @@
     <link rel="stylesheet" crossorigin="" href="{{ asset('assets/admin/compiled/css/app.css') }}">
     <link rel="stylesheet" crossorigin="" href="{{ asset('assets/admin/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" crossorigin="" href="{{ asset('assets/admin/compiled/css/auth.css') }}">
-    <link rel="icon"
-        href="https://apps.codepolitan.com/sites/learn/uploads/original/2/logo-codepolitan-originals.png"
-        type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/logo/archana1.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/logo/archana1.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/logo/archana1.png') }}">
+
 </head>
 
 <body>
@@ -24,25 +25,25 @@
                     </div>
                     <h1 class="auth-title">Log in Archana Order APP</h1>
                     <p class="auth-subtitle mb-5">Silakan masuk untuk mengelola layanan Archana Order APP.</p>
-@if ($errors->any())
-    <div class="alert alert-danger mb-4">
-        @foreach ($errors->all() as $error)
-            <div>{{ $error }}</div>
-        @endforeach
-    </div>
-@endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger mb-4">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="email" class="form-control form-control-xl" placeholder="Email"
-    name="email" value="{{ old('email') }}" required autofocus autocomplete="email">
+                                name="email" value="{{ old('email') }}" required autofocus autocomplete="email">
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="password" class="form-control form-control-xl" placeholder="Password"
-    name="password" required autocomplete="current-password">
+                            <input type="password" class="form-control form-control-xl" placeholder="Password"
+                                name="password" required autocomplete="current-password">
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>

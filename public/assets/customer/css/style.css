@@ -1,16 +1,32 @@
 /*** Spinner Start ***/
+/*** Spinner Start ***/
 #spinner {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.8s ease-out, visibility 0s linear 0.5s;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease-out, visibility 0s linear 0.8s;
     z-index: 99999;
 }
 
-#spinner.show {
-    transition: opacity 0.8s ease-out, visibility 0s linear 0s;
-    visibility: visible;
-    opacity: 1;
+#spinner.hide {
+    opacity: 0;
+    visibility: hidden;
 }
+
+.spinner-logo {
+    width: 120px;
+    height: auto;
+    animation: archana-rotate 2.5s linear infinite;
+}
+
+@keyframes archana-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+/*** Spinner End ***/
 
 .back-to-top {
     position: fixed;

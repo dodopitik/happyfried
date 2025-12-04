@@ -5,8 +5,9 @@
 
     <!-- Spinner Start -->
     <div id="spinner"
-        class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" role="status"></div>
+        class="w-100 vh-100 position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
+        style="background:#E9E0D7;">
+        <img src="{{ asset('assets/logo/archana1.png') }}" alt="Archana Smart App" class="spinner-logo">
     </div>
     <!-- Spinner End -->
 
@@ -34,10 +35,10 @@
                     <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
                     <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
                     <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                    Designed By <a class="border-bottom text-happy" href="https://www.instagram.com/braditamaa/" target="_blank" 
-   rel="noopener noreferrer">Braditams</a> Distributed By <a
-                        class="border-bottom text-happy" href="https://archana.co.id" target="_blank" 
-   rel="noopener noreferrer">Archana Order APP</a>
+                    Designed By <a class="border-bottom text-happy" href="https://www.instagram.com/braditamaa/"
+                        target="_blank" rel="noopener noreferrer">Braditams</a> Distributed By <a
+                        class="border-bottom text-happy" href="https://archana.co.id" target="_blank"
+                        rel="noopener noreferrer">Archana Order APP</a>
                 </div>
             </div>
         </div>
@@ -69,6 +70,17 @@
 
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    {{-- JS untuk hide spinner --}}
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const spinner = document.getElementById('spinner');
+                if (spinner) {
+                    spinner.classList.add('hide'); // pakai .hide, sesuai CSS di atas
+                }
+            }, 800); // delay sebelum mulai fade (0.8s), bisa kamu ubah sesuka hati
+        });
     </script>
     @yield('scripts')
 </body>

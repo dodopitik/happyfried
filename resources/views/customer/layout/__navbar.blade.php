@@ -1,10 +1,11 @@
 <!-- Navbar start -->
 <div class="container-fluid fixed-top shadow-sm">
     <div class="container px-0">
-        <nav class="navbar navbar-light bg-black text-white navbar-expand-xl  "> <a href="#" class="navbar-brand">
+        <nav class="navbar navbar-light bg-black text-white navbar-expand-xl  "> <a href="{{ route('menu') }}"
+                class="navbar-brand">
                 <h1 class="text-happy display-6 ">Archana Order</h1>
             </a>
-                {{-- @php
+            {{-- @php
                     $cart = session('cart', []);
                     $count = $cart ? array_sum(array_column($cart, 'qty')) : 0;
                 @endphp
@@ -22,15 +23,14 @@
                 <span class="fa fa-bars text-happy"></span>
             </button>
             <div class="collapse navbar-collapse bg-white " id="navbarCollapse">
-                
+
                 <div class="navbar-nav mx-auto ">
                     <a href="{{ route('menu') }}" class="nav-item nav-link">Home</a>
                     <a href="{{ route('menu') }}" class="nav-item nav-link active">Menu</a>
-                    <a href="#" class="nav-item nav-link">Kontak</a>
+                    <a href="https://wa.me/62895363076706" class="nav-item nav-link">Kontak</a>
                 </div>
             </div>
-              
+
         </nav>
     </div>
 </div>
-
