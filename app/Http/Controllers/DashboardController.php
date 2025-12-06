@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -56,6 +58,51 @@ class DashboardController extends Controller
         $settlementCount = Order::where('status', 'settlement')->count();
         $cookedCount     = Order::where('status', 'cooked')->count();
 
+    $topMenus = \DB::table('order_items')
+    ->join('items', 'order_items.item_id', '=', 'items.id')
+    ->select(
+        'items.name as menu_name',
+        \DB::raw('SUM(order_items.quantity) as total_qty')
+    )
+    ->groupBy('order_items.item_id', 'items.name')
+    ->orderByDesc('total_qty')
+    ->limit(5)
+    ->get();
+
+$topMenuNames = $topMenus->pluck('menu_name')->toArray();
+$topMenuQty   = $topMenus->pluck('total_qty')->toArray();
+
+// ======================
+// Trend Penjualan 7 Hari
+// ======================
+$trendLabels = [];
+$trendData   = [];
+
+for ($i = 6; $i >= 0; $i--) {
+    $date = Carbon::now()->subDays($i);
+
+    // label tanggal
+    $trendLabels[] = $date->format('d M');
+
+    // total order per tanggal
+    $trendData[] = Order::whereDate('created_at', $date->toDateString())->count();
+}
+// ======================
+// Trend Revenue 7 Hari
+// ======================
+$revenueLabels = [];
+$revenueData   = [];
+
+for ($i = 6; $i >= 0; $i--) {
+    $date = Carbon::now()->subDays($i);
+
+    // label tanggal
+    $revenueLabels[] = $date->format('d M');
+
+    // total revenue
+    $revenueData[] = Order::whereDate('created_at', $date->toDateString())
+        ->sum('grandtotal');
+}
         return view('admin.dashboard', compact(
             'totalOrders',
             'totalRevenue',
@@ -69,7 +116,13 @@ class DashboardController extends Controller
             'cookedCount',
             'lastMonthlyOrders',
             'lastMonthlyRevenue',
-            'lastMonthlyFee'
+            'lastMonthlyFee',
+            'topMenuNames',
+            'topMenuQty',
+            'trendLabels',
+            'trendData',
+            'revenueLabels',
+            'revenueData'
         ));
     }
 }

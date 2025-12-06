@@ -640,3 +640,12 @@ body {
         text-align: center;
     }
 }
+#categoryFilters {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+#categoryFilters::-webkit-scrollbar {
+    height: 0px;
+}

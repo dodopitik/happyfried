@@ -16,10 +16,8 @@
                     <div class="row g-4">
                         <div class="col-lg">
                             <div class="row g-4 justify-content-center ">
-                                <div class="mb-4 d-flex flex-wrap gap-2 justify-content-between" id="categoryFilters">
-                                    <div class="inline ">
-
-
+                                <div class="mb-4 py-2 overflow-auto" id="categoryFilters">
+                                    <div class="d-flex flex-nowrap gap-2">
                                         <span
                                             class="badge bg-primary border border-dark text-white px-3 py-2 filter-btn active cursor-pointer"
                                             data-category="all">
@@ -41,8 +39,6 @@
                                             Snack
                                         </span>
                                     </div>
-
-
                                 </div>
                                 @foreach ($items as $item)
                                     <div class="col-6 col-md-6 col-lg-6 col-xl-4 menu-card mb-4"
