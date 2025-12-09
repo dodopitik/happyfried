@@ -169,7 +169,7 @@
                 if (paymentMethod == "cash") {
                     form.submit();
                 } else {
-                    fetch("{{ route('checkout.store') }}", {
+                    fetch("/checkout/store", {
                             method: "POST",
                             body: formData,
                             headers: {
