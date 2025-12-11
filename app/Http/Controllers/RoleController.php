@@ -34,12 +34,12 @@ class RoleController extends Controller
         $validatedData = $request->validate(
             [
                 'role_name' => ['required', 'string', 'max:255', Rule::unique('roles', 'role_name')],
-                'description' => 'required|string',
+                
             ],
             [
                 'role_name.unique'   => 'Nama role sudah dipakai. Gunakan nama lain.',
                 'role_name.required' => 'Nama role wajib diisi.',
-                'description.required' => 'Deskripsi role wajib diisi.',
+                
             ]
         );
 
@@ -74,12 +74,12 @@ class RoleController extends Controller
         $validatedData = $request->validate(
             [
                 'role_name' => ['required', 'string', 'max:255'],
-                'description' => 'required|string',
+                
             ],
             [
                 'role_name.unique'   => 'Nama role sudah dipakai. Gunakan nama lain.',
                 'role_name.required' => 'Nama role wajib diisi.',
-                'description.required' => 'Deskripsi role wajib diisi.',
+                
             ]
         );
 
