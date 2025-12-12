@@ -63,13 +63,13 @@
                                                     $labels = [
                                                         1 => 'Makanan',
                                                         2 => 'Minuman',
-                                                        6 => 'Snack',
+                                                        3 => 'Snack',
                                                     ];
 
                                                     $colors = [
                                                         1 => 'bg-warning',
                                                         2 => 'bg-info',
-                                                        6 => 'bg-orange',
+                                                        3 => 'bg-orange',
                                                     ];
                                                 @endphp
                                                 <span class="badge {{ $colors[$item->category_id] ?? 'bg-secondary' }}">

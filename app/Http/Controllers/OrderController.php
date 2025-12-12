@@ -96,4 +96,18 @@ class OrderController extends Controller
     ]);
 }
 
+ public function checkNew(Request $request)
+    {
+        $lastId = (int) $request->query('last_id', 0);
+
+        $latestOrder = Order::latest('id')->first();
+
+        $latestId = $latestOrder?->id ?? 0;
+
+        return response()->json([
+            'has_new'   => $latestId > $lastId,
+            'latest_id' => $latestId,
+        ]);
+    }
+
 }

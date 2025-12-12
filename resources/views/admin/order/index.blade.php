@@ -39,12 +39,13 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
+                    @php
+                        // Ambil ID terbesar dari daftar order yang sedang ditampilkan
+                        $lastOrderId = $orders->max('id') ?? 0;
+                    @endphp
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                         <div class="dataTable-container table-responsive">
                             <table class="table table-striped table-sm text-nowrap" id="table1">
-                                <div class="d-flex justify-content-end">
-                                    <a href="{{ route('orders.create') }}" class="btn btn-primary "> + Tambah Menu </a>
-                                </div>
                                 <thead class="">
                                     <tr class="">
                                         <th>No</th>
@@ -128,17 +129,23 @@
 @section('scripts')
     <script src="{{ asset('assets/admin/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // init datatable (opsional)
-            const t = document.querySelector('#table1');
-            if (t) new simpleDatatables.DataTable(t);
 
-            // intercept delete
+            // ==== DataTable ====
+            const t = document.querySelector('#table1');
+            if (t) {
+                new simpleDatatables.DataTable(t);
+            }
+
+            // ==== Konfirmasi delete ====
             document.querySelectorAll('.form-delete').forEach(function(form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
+
                     const name = form.dataset.name || 'item ini';
+
                     Swal.fire({
                         title: 'Hapus data?',
                         html: `Apakah Anda yakin ingin menghapus <b>${name}</b>?`,
@@ -149,12 +156,46 @@
                         reverseButtons: true,
                     }).then((r) => {
                         if (r.isConfirmed) {
-                            // submit native; method DELETE dikirim via spoofing _method
                             HTMLFormElement.prototype.submit.call(form);
                         }
                     });
                 });
             });
+
+            // ==== CEK ORDER BARU / STATUS BERUBAH ====
+            let lastOrderId = {{ $lastOrderId ?? 0 }};
+            let lastStatus = @json($lastOrderStatus ?? '');
+
+            function checkNewOrders() {
+                fetch(
+                        location.origin +
+                        "/orders/check-new?last_id=" + encodeURIComponent(lastOrderId) +
+                        "&last_status=" + encodeURIComponent(lastStatus), {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json'
+                            },
+                            cache: 'no-store'
+                        }
+                    )
+                    .then(res => {
+                        if (!res.ok) throw new Error('HTTP ' + res.status);
+                        return res.json();
+                    })
+                    .then(data => {
+                        if (data.latest_id !== undefined) lastOrderId = data.latest_id;
+                        if (data.latest_status !== undefined) lastStatus = data.latest_status;
+
+                        if (data.has_new || data.status_changed) {
+                            location.reload();
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Polling error:", err);
+                    });
+            }
+
+            setInterval(checkNewOrders, 5000);
         });
     </script>
 @endsection

@@ -63,9 +63,18 @@ Route::middleware(['auth', 'role:admin|cashier'])->group(function () {
 Route::middleware(['auth', 'role:admin|cashier|chef'])->group(function () {
     Route::post('orders/{order}', [OrderController::class, 'settlement'])->name('orders.settlement');
     Route::post('orders/{order}/cooked', [OrderController::class, 'cooked'])->name('orders.cooked');
+
+    // ➕ tambahkan ini
+    Route::get('orders/check-new', [OrderController::class, 'checkNew'])
+        ->name('orders.checkNew');
+
+    Route::get('orders/poll', [OrderController::class, 'poll'])
+        ->name('orders.poll');
+
     Route::resource('orders', OrderController::class);
-     Route::get('orders/{order}/print', [OrderController::class, 'print'])
-        ->name('orders.print');
+    Route::get('orders/{order}/print', [OrderController::class, 'print'])->name('orders.print');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+
 

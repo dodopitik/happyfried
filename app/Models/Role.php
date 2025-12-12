@@ -10,7 +10,6 @@ class Role extends Model
     use SoftDeletes;
     protected $fillable = [
         'role_name',
-        'description',
         'created_at',
         'updated_at',
 
