@@ -11,12 +11,18 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+public function index()
+{
+    $orders = Order::orderByDesc('created_at')->get(); // lebih rapi dari all()->sortByDesc()
 
-        $orders = Order::all()->sortByDesc('created_at');
-        return view('admin.order.index', compact('orders'));
-    }
+    $lastOrder = Order::latest('id')->first();
+
+    return view('admin.order.index', [
+        'orders'          => $orders,
+        'lastOrderId'     => $lastOrder?->id ?? 0,
+        'lastOrderStatus' => $lastOrder?->status ?? '',
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
@@ -96,18 +102,22 @@ class OrderController extends Controller
     ]);
 }
 
- public function checkNew(Request $request)
-    {
-        $lastId = (int) $request->query('last_id', 0);
+public function checkNew(Request $request)
+{
+    $lastId     = (int) $request->query('last_id', 0);
+    $lastStatus = (string) $request->query('last_status', '');
 
-        $latestOrder = Order::latest('id')->first();
+    $latestOrder = Order::latest('id')->first();
 
-        $latestId = $latestOrder?->id ?? 0;
+    $latestId     = $latestOrder?->id ?? 0;
+    $latestStatus = $latestOrder?->status ?? '';
 
-        return response()->json([
-            'has_new'   => $latestId > $lastId,
-            'latest_id' => $latestId,
-        ]);
-    }
+    return response()->json([
+        'has_new'        => $latestId > $lastId,
+        'status_changed' => $latestStatus !== '' && $lastStatus !== '' && $latestStatus !== $lastStatus,
+        'latest_id'      => $latestId,
+        'latest_status'  => $latestStatus,
+    ]);
+}
 
 }
